@@ -7,6 +7,7 @@ hadoop fs -rmr -skipTrash $OUTPUTFILE
 # export HADOOP_CLASSPATH=`hadoop classpath`:/home/hackreduce/HackReduce-0.3.jar
 
 $HADOOP_HOME/bin/hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u5.jar \
+    -D mapred.reduce.tasks=20
     -mapper 'python aki-mapper.py' \
     -reducer 'python aki-reducer.py' \
     -input /datasets/wikipedia \
