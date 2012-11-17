@@ -11,3 +11,10 @@ Anarchy:Death
 Anarchy:Destruction
 
 There are some small issues w/ the code as documented in the code.
+
+
+Code to execute on Hadoop:
+hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u5.jar \
+-file ~/users/scorpions/aki-mapper.py -mapper ~/users/scorpions/aki-mapper.py \
+-file ~/users/scorpions/aki-reducer.py -reducer ~/users/scorpions/aki-reducer.py \
+-output /users/scorpions/aki-output -input /datasets/wikipedia/*
