@@ -1,34 +1,20 @@
 #!/usr/bin/env python
 import sys
 import re
-key = "UNKNOWN"
+keys = {}
 for line in sys.stdin:
-	#bad = re.findall("[\\x80-\\xFF]",line)
-	#if (bad):
-	#	continue
-		
 
-	title = re.search(r"<title>(.*)</title>",line)
-	
-	if (title):
-		key = str(title.group(1)).lower()
+	values = re.findall("\[\[([\w ]+)\|?\w{0,}\]\]",line)
 
-	# Need to check: did I exclude any characters?
-	values = re.findall("\[\[([a-zA-Z0-9|_ ;,-]+)\]\]",line)
-
-	if values != None:	
+	if values != None:
 		for value in values:
+			lvalue = value.lower()
+			try:
+				if keys[lvalue] > 0:
+					keys[lvalue] = keys[lvalue] + 1
+			except:
+					keys[lvalue] = 1
 
-			separator = re.search(r"\|", value)
-		
-			# If there is a piped link, take the actual link	
-			if separator != None:
-				first = re.split(r"\|",value)
-				value = first[0]
+for k,v in keys.iteritems():
+	print ("'" + k + "'"  + "\t" + str(v))
 
-			if len(value) > 0:
-				#if key == None:
-				#	key = "Unknown"
-				if (key):
-					print (key + "\t" + value.lower())
-	

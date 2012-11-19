@@ -10,15 +10,17 @@ keys = {}
 
 for input in sys.stdin.readlines():
 
-	# Separate values in tuple
+	inputKey, inputValue = input.rstrip().split("\t")
+	
 	try:
-		inputKey, inputValue = input.rstrip().split("\t")
-		values = keys.get(inputKey.rstrip(),[])
-		values.append (inputValue)
-		keys[inputKey.rstrip()] = values
-		
+		if keys[inputKey] > 0:
+			keys[inputKey] = keys[inputKey] + int(inputValue)
 	except:
-		print("JUNK")
+		keys[inputKey] = int(inputValue)
 
-for k,v in keys.iteritems():
- print ("'" + k + "'"  + "\t" + "\t".join(v))
+for k,v in sorted( keys.iteritems() , key=lambda item: -item[1] ):
+	if v == 1:
+		continue
+	print ( k   + "\t" + str(v))
+
+
